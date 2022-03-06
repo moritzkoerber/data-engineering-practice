@@ -1,26 +1,26 @@
 ## Exercise #5 - Data Modeling for Postgres + Python.
 
 In this fifth exercise you will work on a few different topics,
-data modeling, Python, and Postgres. These are common problems worked 
+data modeling, Python, and Postgres. These are common problems worked
 on in data engineering.
 
 #### Setup
-1. Change directories at the command line 
+1. Change directories at the command line
    to be inside the `Exercise-5` folder `cd Exercises/Exercise-5`
-   
+
 2. Run `docker build --tag=exercise-5 .` to build the `Docker` image.
 
 3. There is a file called `main.py` in the `Exercise-5` directory, this
 is where you `Python` code to complete the exercise should go.
-   
+
 4. Once you have finished the project or want to test run your code,
    run the following command `docker-compose up run` from inside the `Exercises/Exercise-5` directory
 
 #### Problems Statement
 There is a folder called `data` in this current directory, `Exercises/Exercise-5`. There are also
-3 `csv` files located in that folder. Open each one and examine it, the 
+3 `csv` files located in that folder. Open each one and examine it, the
 first task is to create a `sql` script with the `DDL` to hold
-a `CREATE` statement for each data file. Remember to think about data types. 
+a `CREATE` statement for each data file. Remember to think about data types.
 Also, this `CREATE` statements should include indexes for each table, as well
 as primary and foreign keys.
 

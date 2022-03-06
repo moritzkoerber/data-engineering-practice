@@ -4,14 +4,14 @@ Here on our sixth exercise we will step it up a notch and start to use some
 more common Big Data tools, in this case Spark and PySpark.
 
 #### Setup
-1. Change directories at the command line 
+1. Change directories at the command line
    to be inside the `Exercise-6` folder `cd Exercises/Exercise-6`
-   
+
 2. Run `docker build --tag=exercise-6 .` to build the `Docker` image.
 
 3. There is a file called `main.py` in the `Exercise-6` directory, this
 is where you `Python` code to complete the exercise should go.
-   
+
 4. Once you have finished the project or want to test run your code,
    run the following command `docker-compose up run` from inside the `Exercises/Exercise-6` directory
 

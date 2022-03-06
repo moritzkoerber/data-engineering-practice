@@ -8,14 +8,14 @@ We can work with three nice `Python` packages, `glob`, `json`, and `csv`.
 
 
 #### Setup
-1. Change directories at the command line 
+1. Change directories at the command line
    to be inside the `Exercise-4` folder `cd Exercises/Exercise-4`
-   
+
 2. Run `docker build --tag=exercise-4 .` to build the `Docker` image.
 
 3. There is a file called `main.py` in the `Exercise-4` directory, this
 is where you `Python` code to complete the exercise should go.
-   
+
 4. Once you have finished the project or want to test run your code,
    run the following command `docker-compose up run` from inside the `Exercises/Exercise-4` directory
 
