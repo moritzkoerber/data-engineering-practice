@@ -1,12 +1,8 @@
 version: "3.9"
 services:
-  test:
-    image: "exercise-4"
-    volumes:
-      - .:/app
-    command: python3 -m pytest
-  run:
-    image: "exercise-4"
-    volumes:
-      - .:/app
-    command: python3 main.py
+  build-and-run:
+    image: exercise-4
+    build:
+      context: ../../
+      dockerfile: ./Exercises/Exercise-4/Dockerfile
+    command: pipenv run python main.py
