@@ -1,12 +1,17 @@
 version: "3.9"
 services:
-  test:
-    image: "exercise-2"
-    volumes:
-      - .:/app
-    command: python3 -m pytest
+  build:
+    image: exercise-2
+    build:
+      context: ../../
+      dockerfile: ./Exercises/Exercise-2/Dockerfile
+  tests:
+    depends_on:
+      - build
+    image: exercise-2
+    command: pipenv run python -m pytest
   run:
-    image: "exercise-2"
-    volumes:
-      - .:/app
-    command: python3 main.py
+    depends_on:
+      - build
+    image: exercise-2
+    command: pipenv run python main.py regex
