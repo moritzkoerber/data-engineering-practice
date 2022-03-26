@@ -1,12 +1,10 @@
 version: "3.9"
 services:
-  test:
-    image: "exercise-3"
+  build-and-run:
+    image: exercise-3
+    build:
+      context: ../../
+      dockerfile: ./Exercises/Exercise-3/Dockerfile
     volumes:
-      - .:/app
-    command: python3 -m pytest
-  run:
-    image: "exercise-3"
-    volumes:
-      - .:/app
-    command: python3 main.py
+      - $HOME/.aws:/root/.aws:ro
+    command: pipenv run python main.py
