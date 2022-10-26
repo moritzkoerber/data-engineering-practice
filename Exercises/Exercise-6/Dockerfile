@@ -36,5 +36,5 @@ COPY Pipfile .
 COPY Pipfile.lock .
 
 RUN ["/bin/bash", "-c",  "set -o pipefail && wget -O- -q https://bootstrap.pypa.io/get-pip.py | python3.10"]
-RUN python3.10 -m pip install --no-cache-dir pipenv==2022.3.28 && \
+RUN python3.10 -m pip install --no-cache-dir pipenv==2022.10.25 && \
     PIPENV_VENV_IN_PROJECT=1 pipenv install --dev --deploy --ignore-pipfile
