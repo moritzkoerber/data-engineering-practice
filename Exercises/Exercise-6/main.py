@@ -1,13 +1,16 @@
 import logging
 import os
-import re
 from argparse import ArgumentParser
 from pathlib import Path
-from zipfile import ZipFile
 
 import pyspark.sql.functions as sf
 from pyspark.sql import DataFrame, SparkSession, Window
-from utils.utils import create_directory
+from utils.utils import (
+    create_directory,
+    create_spark_dataframe_from_memory,
+    extract_and_return_csv_filepaths,
+    read_zipfile_content_into_memory,
+)
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO)
@@ -18,28 +21,7 @@ parser.add_argument("--in_memory", action="store_true")
 directory = "reports"
 
 
-def create_spark_dataframe_from_memory(
-    list_str: list, sc: SparkSession, **kwargs
-) -> DataFrame:
-    p = sc.sparkContext.parallelize(list_str)
-    return sc.read.csv(p, **kwargs)
-
-
-def read_zipfile_content_to_memory(zipfile_path: Path):
-    with ZipFile(zipfile_path, "r") as zip:
-        return [zip.read(x) for x in zip.namelist() if re.fullmatch(r"[^/]*\.csv", x)]
-
-
-def extract_and_return_csv_filepaths(zip_file_path: Path):
-    with ZipFile(zip_file_path, "r") as zip:
-        return [
-            zip.extract(e, path="data")
-            for e in zip.namelist()
-            if re.fullmatch(r"[^/]*\.csv", e)
-        ]
-
-
-def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession):
+def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession) -> dict:
     csv_frames = {}
 
     for zip_file_path in zip_file_paths:
@@ -54,7 +36,7 @@ def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession):
                 ).cache()
             continue
 
-        zip_contents = [e for e in read_zipfile_content_to_memory(zip_file_path)]
+        zip_contents = [e for e in read_zipfile_content_into_memory(zip_file_path)]
         for csv_file in zip_contents:
             logger.info(f"Reading files in {zip_file_path} from memory")
 
