@@ -201,7 +201,7 @@ class QuestionAnsweringService:
 
 
 def main():
-    sc = SparkSession.builder.appName("Exercise6").getOrCreate()
+    sc = SparkSession.builder.appName("Exercise6").master("local[*]").getOrCreate()
 
     create_directory(directory)
 
