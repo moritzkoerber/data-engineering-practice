@@ -10,7 +10,9 @@ from pyspark.sql import SparkSession
 
 @pytest.fixture(scope="session")
 def create_spark_session():
-    return SparkSession.builder.appName("Exercise6Test").getOrCreate()
+    return (
+        SparkSession.builder.appName("Exercise6Test").master("local[*]").getOrCreate()
+    )
 
 
 @pytest.fixture(scope="function")
