@@ -24,7 +24,6 @@ RUN wget --progress=dot:giga https://archive.apache.org/dist/spark/spark-${spark
     wget --progress=dot:giga https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.0/hadoop-aws-3.2.0.jar && \
     mv hadoop-aws-3.2.0.jar /spark/jars
 
-
 WORKDIR /app
 
 COPY ./Exercises/Exercise-6/main.py .
@@ -35,6 +34,6 @@ COPY Exercises/utils ./utils
 COPY Pipfile .
 COPY Pipfile.lock .
 
-RUN ["/bin/bash", "-c",  "set -o pipefail && wget -O- -q https://bootstrap.pypa.io/get-pip.py | python3.10"]
-RUN python3.10 -m pip install --no-cache-dir pipenv==2022.10.25 && \
+RUN ["/bin/bash", "-c", "set -o pipefail && wget -O- -q https://bootstrap.pypa.io/get-pip.py | python3.10"]
+RUN python3.10 -m pip install --no-cache-dir pipenv==2023.5.19 && \
     PIPENV_VENV_IN_PROJECT=1 pipenv install --dev --deploy --ignore-pipfile

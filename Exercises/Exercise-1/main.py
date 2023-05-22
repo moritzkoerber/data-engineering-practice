@@ -24,17 +24,14 @@ download_uris = [
 download_directory = Path(__file__).parent / "downloads"
 
 
-def download_and_unzip(uri, download_directory):
-    with requests.Session() as s:
-        with s.get(uri, stream=True) as response:
-            try:
-                response.raise_for_status()
-                zipfile.ZipFile(io.BytesIO(response.content)).extractall(
-                    download_directory
-                )
-            except HTTPError as h:
-                print(f"Invalid request for {uri}")
-                print(h)
+def download_and_unzip(uri: str, download_directory: Path):
+    with requests.Session() as s, s.get(uri, stream=True, timeout=60) as response:
+        try:
+            response.raise_for_status()
+            zipfile.ZipFile(io.BytesIO(response.content)).extractall(download_directory)
+        except HTTPError as h:
+            print(f"Invalid request for {uri}")
+            print(h)
 
 
 def main():
@@ -42,17 +39,14 @@ def main():
         download_and_unzip(uri, download_directory)
 
 
-async def async_download_and_unzip(uri, download_directory):
-    with requests.Session() as s:
-        with s.get(uri, stream=True) as response:
-            try:
-                response.raise_for_status()
-                zipfile.ZipFile(io.BytesIO(response.content)).extractall(
-                    download_directory
-                )
-            except HTTPError as h:
-                print(f"Invalid request for {uri}")
-                print(h)
+async def async_download_and_unzip(uri: str, download_directory: str):
+    with requests.Session() as s, s.get(uri, stream=True, timeout=60) as response:
+        try:
+            response.raise_for_status()
+            zipfile.ZipFile(io.BytesIO(response.content)).extractall(download_directory)
+        except HTTPError as h:
+            print(f"Invalid request for {uri}")
+            print(h)
 
 
 async def async_main():

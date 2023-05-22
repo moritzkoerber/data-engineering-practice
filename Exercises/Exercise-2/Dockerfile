@@ -7,5 +7,5 @@ COPY Exercises/Exercise-2/tests ./tests
 COPY Pipfile .
 COPY Pipfile.lock .
 
-RUN python3 -m pip install --no-cache-dir pipenv==2022.10.25 && \
+RUN python3 -m pip install --no-cache-dir pipenv==2023.5.19 && \
     PIPENV_VENV_IN_PROJECT=1 pipenv install --dev --deploy --ignore-pipfile
