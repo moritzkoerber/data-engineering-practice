@@ -2,3 +2,7 @@
 multi_line_output = 3
 line_length = 88
 include_trailing_comma = true
+profile="black"
+
+[tool.bandit]
+skips = ["B101", "B608"]

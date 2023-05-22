@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  build:
+    image: exercise-8
+    build:
+      context: ../../
+      dockerfile: ./Exercises/Exercise-8/Dockerfile
+  tests:
+    depends_on:
+      - build
+    image: exercise-8
+    command: pipenv run python3.10 -m pytest
+  run:
+    depends_on:
+      - build
+    image: exercise-8
+    command: pipenv run python3.10 main.py

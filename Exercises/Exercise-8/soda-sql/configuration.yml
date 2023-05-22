@@ -1,0 +1,3 @@
+data_source duckdb:
+  type: duckdb
+  path: ":memory:"
