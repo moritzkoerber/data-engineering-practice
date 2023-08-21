@@ -13,7 +13,7 @@ repos:
           - --unsafe
 
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 23.7.0
     hooks:
       - id: black
 
@@ -23,13 +23,13 @@ repos:
       - id: isort
 
   - repo: https://github.com/pycqa/autoflake
-    rev: v2.1.1
+    rev: v2.2.0
     hooks:
       - id: autoflake
         args: [--in-place, --remove-all-unused-imports, --remove-unused-variable]
 
   - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
       - id: flake8
         additional_dependencies: [flake8-bugbear, pep8-naming, flake8-picky-parentheses, flake8-comprehensions, flake8-builtins, flake8-simplify, flake8-pie, flake8-return]
@@ -42,7 +42,7 @@ repos:
         additional_dependencies: ["bandit[toml]"]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.3.0'
+    rev: 'v1.5.1'
     hooks:
       - id: mypy
         args: [--no-strict-optional,  --ignore-missing-imports]
