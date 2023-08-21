@@ -26,14 +26,14 @@ def expected_df(request):
 
 
 @pytest.mark.parametrize(
-    ("input_sdf, expected_df"),
+    "input_sdf, expected_df",
     [
         (
             [
                 [("male", 3600), ("male", 4000), ("female", 1800)],
                 ["gender", "tripduration"],
             ],
-            dict(longest_trip_takers=["male"]),
+            {"longest_trip_takers": ["male"]},
         )
     ],
     indirect=True,

@@ -26,7 +26,7 @@ def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession) -> dict:
 
     for zip_file_path in zip_file_paths:
         if not parser.parse_args().in_memory:
-            logger.info(f"Reading files in {zip_file_path} from disk")
+            logger.info("Reading files in %s from disk", zip_file_path)
             zip_contents = extract_and_return_csv_filepaths(zip_file_path)
             for csv_file in zip_contents:
                 temp_sdf = sc.read.csv(csv_file, header=True)
@@ -36,9 +36,8 @@ def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession) -> dict:
                 ).cache()
             continue
 
-        zip_contents = [e for e in read_zipfile_content_into_memory(zip_file_path)]
-        for csv_file in zip_contents:
-            logger.info(f"Reading files in {zip_file_path} from memory")
+        for csv_file in read_zipfile_content_into_memory(zip_file_path):
+            logger.info("Reading files in %s from memory", zip_file_path)
 
             temp_sdf = create_spark_dataframe_from_memory(
                 csv_file.decode("utf-8").splitlines(), sc, header=True
