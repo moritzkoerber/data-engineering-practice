@@ -12,7 +12,7 @@ pyspark = "==3.2.1"
 aiohttp = "*"
 awsume = "*"
 duckdb = "*"
-soda-core-duckdb = "*"
+polars = "*"
 
 [dev-packages]
 pre-commit = "*"
