@@ -1,4 +1,4 @@
-This repository contains my solutions to the awesome seven data engineering exercises by Daniel Beach (<https://github.com/danielbeach/data-engineering-practice/>).
+This repository contains my solutions to the awesome data engineering exercises by Daniel Beach (<https://github.com/danielbeach/data-engineering-practice/>).
 
 To run the solutions, in each respective folder either
 
