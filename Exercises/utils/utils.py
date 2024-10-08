@@ -10,11 +10,11 @@ def get_assumed_role_boto3_session(profile_name: str):
     return awsume(profile_name)
 
 
-def create_directory(directory: str):
+def create_directory(directory: str | Path):
     Path(directory).mkdir(parents=True, exist_ok=True)
 
 
-def read_zipfile_content_into_memory(zipfile_path: Path) -> list:
+def read_zipfile_content_into_memory(zipfile_path: str | Path) -> list:
     with ZipFile(zipfile_path, "r") as zip_file:
         return [
             zip_file.read(x)
@@ -23,7 +23,7 @@ def read_zipfile_content_into_memory(zipfile_path: Path) -> list:
         ]
 
 
-def extract_and_return_csv_filepaths(zip_file_path: Path) -> list:
+def extract_and_return_csv_filepaths(zip_file_path: str | Path) -> list[str]:
     with ZipFile(zip_file_path, "r") as zip_file:
         return [
             zip_file.extract(e, path="data")
@@ -33,7 +33,7 @@ def extract_and_return_csv_filepaths(zip_file_path: Path) -> list:
 
 
 def create_spark_dataframe_from_memory(
-    list_str: list, sc: SparkSession, **kwargs
+    list_str: list[str], sc: SparkSession, **kwargs
 ) -> DataFrame:
     p = sc.sparkContext.parallelize(list_str)
     return sc.read.csv(p, **kwargs)
