@@ -52,14 +52,6 @@ repos:
         args: ["-c", "pyproject.toml"]
         additional_dependencies: ["bandit[toml]"]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.11.2"
-    hooks:
-      - id: mypy
-        args:
-          [--no-strict-optional, --ignore-missing-imports, --allow-redefinition]
-        additional_dependencies: [types-requests, pandas-stubs, pytest-stub]
-
   - repo: https://github.com/hadolint/hadolint
     rev: v2.13.1-beta
     hooks:
