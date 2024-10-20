@@ -1,5 +1,6 @@
 import asyncio
 import io
+import logging
 import zipfile
 from argparse import ArgumentParser
 from pathlib import Path
@@ -9,26 +10,27 @@ import requests
 from requests.exceptions import HTTPError
 from utils.utils import create_directory
 
-parser = ArgumentParser()
-parser.add_argument("--call_async", action="store_true")
+
+def unzip_csv_content(content: bytes, download_directory: str | Path):
+    with zipfile.ZipFile(io.BytesIO(content)) as zip_file:
+        zip_file.extractall(download_directory)
 
 
-def download_and_unzip(
-    session: requests.Session, uri: str, download_directory: str | Path
-):
+def download_csv_bytes(session: requests.Session, uri: str) -> bytes | None:
     with session.get(uri, stream=True, timeout=60) as response:
         try:
             response.raise_for_status()
-            zipfile.ZipFile(io.BytesIO(response.content)).extractall(download_directory)
+            return response.content
         except HTTPError as h:
-            print(f"Invalid request for {uri}")
-            print(h)
+            logging.error("Invalid request for %s", uri)
+            logging.error(h)
 
 
 def slow_main(download_uris: list[str], download_directory: str | Path):
     with requests.Session() as s:
         for uri in download_uris:
-            download_and_unzip(s, uri, download_directory)
+            if content := download_csv_bytes(s, uri):
+                unzip_csv_content(content, download_directory)
 
 
 async def async_download_and_unzip(
@@ -38,13 +40,13 @@ async def async_download_and_unzip(
         try:
             response.raise_for_status()
             content = await response.read()
-            zipfile.ZipFile(io.BytesIO(content)).extractall(download_directory)
+            await asyncio.to_thread(unzip_csv_content, content, download_directory)
         except aiohttp.ClientResponseError as c:
-            print(f"Invalid request for {uri}")
-            print(c)
+            logging.error("Invalid request for %s", uri)
+            logging.error(c)
 
 
-async def async_main(download_uris, download_directory):
+async def async_main(download_uris: list[str], download_directory: str | Path):
     async with aiohttp.ClientSession() as s:
         await asyncio.gather(
             *[
@@ -70,11 +72,14 @@ def main():
 
     create_directory(download_directory)
 
+    parser = ArgumentParser()
+    parser.add_argument("--call_async", action="store_true")
+
     if parser.parse_args().call_async:
-        print("Running tasks concurrently:")
+        logging.info("Running tasks concurrently:")
         asyncio.run(async_main(download_uris, download_directory))
     else:
-        print("Running tasks strictly sequentially:")
+        logging.info("Running tasks strictly sequentially:")
         slow_main(download_uris, download_directory)
 
 
