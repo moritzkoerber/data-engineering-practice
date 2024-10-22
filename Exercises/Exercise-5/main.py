@@ -61,7 +61,9 @@ DROP TABLE IF EXISTS {table_name} CASCADE
 """
 
 
-def create_index(index_name: str, table_name: str, column_names: int | list) -> str:
+def create_index(
+    index_name: str, table_name: str, column_names: int | list[str]
+) -> str:
     return f"""
 CREATE INDEX {index_name} ON {table_name} ({column_names})
 """

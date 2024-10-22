@@ -5,13 +5,8 @@ import pandas
 import requests
 from bs4 import BeautifulSoup
 
-parser = argparse.ArgumentParser()
-parser.add_argument("mode", type=str)
 
-url = "https://www.ncei.noaa.gov/data/local-climatological-data/access/2021/"
-
-
-def find_filenames_bs4(url: str) -> list:
+def find_filenames_bs4(url: str) -> list[str]:
     with requests.get(url, timeout=60) as response:
         table = BeautifulSoup(response.content, "html.parser").find("table")
         rows = table.find_all("tr")
@@ -22,7 +17,7 @@ def find_filenames_bs4(url: str) -> list:
         ]
 
 
-def find_filenames_regex(url: str) -> list:
+def find_filenames_regex(url: str) -> list[str]:
     import re
 
     with requests.get(url, timeout=16) as response:
@@ -37,7 +32,7 @@ def find_filenames_regex(url: str) -> list:
         return [f"{url}{i.group(0)}" for i in s if i]
 
 
-def download_and_print(url_list: list) -> None:
+def download_and_print(url_list: list[str]) -> None:
     for e in url_list:
         res = requests.get(e, timeout=60)
 
@@ -49,7 +44,7 @@ def download_and_print(url_list: list) -> None:
         print(df.loc[df.HourlyDryBulbTemperature.idxmax()])
 
 
-def main():
+def main(url: str):
     if (mode := parser.parse_args().mode) == "beautifulsoup":
         url_list = find_filenames_bs4(url)
     elif mode == "regex":
@@ -61,4 +56,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", type=str)
+
+    main("https://www.ncei.noaa.gov/data/local-climatological-data/access/2021/")

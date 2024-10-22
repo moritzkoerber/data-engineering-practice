@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 
 
-def flatten_json(path_to_json: str | Path) -> dict:
+def flatten_json(path_to_json: str | Path) -> dict[str, str | bool | int | float]:
     output_dict = {}
 
     def _flatten(k, v):

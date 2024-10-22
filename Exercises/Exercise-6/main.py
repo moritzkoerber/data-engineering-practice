@@ -21,7 +21,9 @@ parser.add_argument("--in_memory", action="store_true")
 directory = "reports"
 
 
-def read_data_into_spark(zip_file_paths: list[Path], sc: SparkSession) -> dict:
+def read_data_into_spark(
+    zip_file_paths: list[Path], sc: SparkSession
+) -> dict[str, DataFrame]:
     csv_frames = {}
 
     for zip_file_path in zip_file_paths:
