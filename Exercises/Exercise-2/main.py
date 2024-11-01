@@ -1,5 +1,6 @@
 import argparse
 import io
+import re
 
 import pandas
 import requests
@@ -18,8 +19,6 @@ def find_filenames_bs4(url: str) -> list[str]:
 
 
 def find_filenames_regex(url: str) -> list[str]:
-    import re
-
     with requests.get(url, timeout=16) as response:
         pattern = re.compile(r"([A-z0-9]{11}\.csv)")
 
@@ -44,7 +43,12 @@ def download_and_print(url_list: list[str]) -> None:
         print(df.loc[df.HourlyDryBulbTemperature.idxmax()])
 
 
-def main(url: str):
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", type=str)
+
+    url = "https://www.ncei.noaa.gov/data/local-climatological-data/access/2021/"
+
     if (mode := parser.parse_args().mode) == "beautifulsoup":
         url_list = find_filenames_bs4(url)
     elif mode == "regex":
@@ -56,7 +60,4 @@ def main(url: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("mode", type=str)
-
-    main("https://www.ncei.noaa.gov/data/local-climatological-data/access/2021/")
+    main()
